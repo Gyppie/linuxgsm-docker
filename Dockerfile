@@ -3,6 +3,9 @@ FROM golang:1.16.0 AS builder
 RUN mkdir -p /src
 ADD Makefile /
 
+ARG USER_ID
+ARG GROUP_ID
+
 COPY src/ /src/
 WORKDIR /
 
@@ -44,6 +47,7 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
         jq \
         lib32gcc1 \
         lib32z1 \
+        libstdc++5:i386 \
         libc6 \
         libstdc++6 \
         libstdc++6:i386 \
@@ -108,6 +112,8 @@ RUN adduser \
       --shell /bin/bash \
       --gecos "" \
       linuxgsm \
+    && groupadd -g ${GROUP_ID} linuxgsm \
+    && useradd -l -u ${USER_ID} -g linuxgsm linuxgsm \
     && usermod -G tty linuxgsm \
     && chown -R linuxgsm:linuxgsm /home/linuxgsm
 
@@ -160,6 +166,8 @@ RUN mkdir serverfiles/Saves
 # serverfiles/Saves is meant to be a common place to put save files when a server supports putting the files somewhere.
 # Creating this folder now works around https://github.com/docker/compose/issues/3270
 RUN mkdir Saves
+
+VOLUME [ "/home/linuxgsm" ]
 
 ARG BUILD_DATE
 ARG VCS_REF
