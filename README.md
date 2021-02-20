@@ -12,7 +12,7 @@ Unoffical Dockerized version of the [Linux Game Server Manager][lgsm-home] proje
 version: '3.1'
 services:
   game:
-    image: joshhsoj1902/linuxgsm-docker:latest
+    image: Gyppie/linuxgsm-docker:latest
     environment:
       - LGSM_GAMESERVERNAME=cssserver
       - LGSM_UPDATEINSTALLSKIP=UPDATE
