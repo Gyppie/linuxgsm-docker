@@ -11,7 +11,7 @@ RUN make build-monitor
 FROM ubuntu:18.04
 
 ENV PUID=$PUID
-ENV GUID=$GUID
+ENV PGID=$PGID
 
 WORKDIR /home/linuxgsm/linuxgsm
 
