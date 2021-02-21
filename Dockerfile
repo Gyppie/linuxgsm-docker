@@ -3,15 +3,15 @@ FROM golang:1.16.0 AS builder
 RUN mkdir -p /src
 ADD Makefile /
 
-ENV PUID
-ENV GUID
-
 COPY src/ /src/
 WORKDIR /
 
 RUN make build-monitor
 
 FROM ubuntu:18.04
+
+ENV PUID
+ENV GUID
 
 WORKDIR /home/linuxgsm/linuxgsm
 
