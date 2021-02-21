@@ -3,8 +3,8 @@ FROM golang:1.16.0 AS builder
 RUN mkdir -p /src
 ADD Makefile /
 
-ARG USER_ID
-ARG GROUP_ID
+ENV PUID
+ENV GUID
 
 COPY src/ /src/
 WORKDIR /
@@ -112,10 +112,10 @@ RUN adduser \
       --shell /bin/bash \
       --gecos "" \
       linuxgsm \
-    && groupadd -g ${GROUP_ID} linuxgsm \
-    && useradd -l -u ${USER_ID} -g linuxgsm linuxgsm \
+    && groupadd -g ${GUID} linuxgsm \
+    && useradd -l -u ${PUID} -g linuxgsm linuxgsm \
     && usermod -G tty linuxgsm \
-    && chown -R linuxgsm:linuxgsm /home/linuxgsm
+    && chown -R ${PUID:${GUID} /home/linuxgsm
 
 # Switch to the user linuxgsm
 USER linuxgsm
